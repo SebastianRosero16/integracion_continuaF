@@ -163,7 +163,7 @@ export const departamentos: Departamento[] = [
     facts: ['Tiene el Parque Arqueológico de San Agustín', 'Es una importante zona cafetera', 'Produce gran parte del arroz del país']
   },
   {
-    code: 'GUA',
+    code: 'LAG',
     depto: 'La Guajira',
     capital: 'Riohacha',
     region: 'Caribe',
