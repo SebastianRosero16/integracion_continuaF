@@ -27,7 +27,11 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         {/* Lado izquierdo: logo + marca */}
         <div className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-100">
-          <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white">
+          <div 
+            className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500 text-white"
+            role="img"
+            aria-label="Logo UCC"
+          >
             U
           </div>
           <span>UCC : Prácticas Desarrollo</span>
@@ -39,6 +43,8 @@ const Navbar: React.FC = () => {
             type="button"
             onClick={toggleTheme}
             className="px-3 py-1.5 rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 hover:opacity-90 transition"
+            aria-label="Cambiar tema de la aplicación"
+            title="Alternar entre tema claro y oscuro"
           >
             Tema
           </button>

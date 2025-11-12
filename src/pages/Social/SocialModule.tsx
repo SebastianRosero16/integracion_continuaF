@@ -318,8 +318,13 @@ export function SocialModule() {
             </h1>
             <p className="text-gray-600">Explora los 32 departamentos de Colombia y sus características</p>
           </div>
-          <Button onClick={startQuiz} variant="success" size="lg">
-            <FaTrophy className="inline mr-2" />
+          <Button 
+            onClick={startQuiz} 
+            variant="success" 
+            size="lg"
+            aria-label="Iniciar quiz de 10 preguntas sobre geografía de Colombia"
+          >
+            <FaTrophy className="inline mr-2" aria-hidden="true" />
             Quiz de 10 Preguntas
           </Button>
         </div>
@@ -331,6 +336,8 @@ export function SocialModule() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar departamento..."
             className="px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+            aria-label="Campo de búsqueda de departamentos"
+            role="searchbox"
           />
 
           <select
