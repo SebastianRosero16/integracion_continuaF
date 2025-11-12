@@ -90,7 +90,7 @@ export const ShapeViewer: React.FC<ShapeViewerProps> = ({ type, dimensions, clas
           </svg>
         );
 
-      case 'polygon':
+      case 'polygon': {
         const { sides = 6 } = dimensions;
         const numSides = Math.max(3, Math.min(12, sides)); // Limitar entre 3 y 12 lados
         const angle = (2 * Math.PI) / numSides;
@@ -116,6 +116,7 @@ export const ShapeViewer: React.FC<ShapeViewerProps> = ({ type, dimensions, clas
             </text>
           </svg>
         );
+      }
 
       default:
         return null;
