@@ -97,7 +97,7 @@ class ErrorBoundary extends Component<Props, State> {
               </p>
 
               {/* Detalles del error (solo en desarrollo) */}
-              {import.meta.env.DEV && this.state.error && (
+              {process.env.NODE_ENV === 'development' && this.state.error && (
                 <details className="mb-6 text-left bg-gray-50 rounded-lg p-4">
                   <summary className="cursor-pointer text-sm font-medium text-gray-700 mb-2">
                     Detalles técnicos del error
