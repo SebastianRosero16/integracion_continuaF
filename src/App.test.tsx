@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renderiza el título principal", () => {
+test("renderiza el encabezado de la aplicación", () => {
   render(<App />);
-  expect(screen.getByText(/Bienvenido a React/i)).toBeInTheDocument();
+  const heading = screen.getByRole('heading', { name: /Colegio Mentes Creativas/i });
+  expect(heading).toBeInTheDocument();
 });
