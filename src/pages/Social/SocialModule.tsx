@@ -329,7 +329,7 @@ export function SocialModule() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar departamento o capital..."
+            placeholder="Buscar departamento..."
             className="px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
           />
 
