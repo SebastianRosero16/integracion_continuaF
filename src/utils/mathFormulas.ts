@@ -1,8 +1,19 @@
+/**
+ * Tipos y funciones para cálculos de figuras geométricas
+ * Proporciona cálculo de área y perímetro con fórmulas y pasos detallados
+ */
+
+/**
+ * Representa una figura geométrica con sus dimensiones
+ */
 export interface GeometricShape {
   type: 'triangle' | 'rectangle' | 'square' | 'circle' | 'polygon';
   dimensions: Record<string, number>;
 }
 
+/**
+ * Resultado de un cálculo geométrico con fórmulas y pasos
+ */
 export interface CalculationResult {
   area: number;
   perimeter: number;
@@ -16,7 +27,12 @@ export interface CalculationResult {
   };
 }
 
-// Cuadrado
+/**
+ * Calcula el área y perímetro de un cuadrado
+ * @param side - Longitud del lado del cuadrado
+ * @returns Resultado con área, perímetro, fórmulas y pasos
+ * @throws Error si el lado no es positivo
+ */
 export const calculateSquare = (side: number): CalculationResult => {
   const area = side * side;
   const perimeter = 4 * side;
@@ -41,7 +57,13 @@ export const calculateSquare = (side: number): CalculationResult => {
   };
 };
 
-// Rectángulo
+/**
+ * Calcula el área y perímetro de un rectángulo
+ * @param length - Longitud del largo del rectángulo
+ * @param width - Longitud del ancho del rectángulo
+ * @returns Resultado con área, perímetro, fórmulas y pasos
+ * @throws Error si largo o ancho no son positivos
+ */
 export const calculateRectangle = (length: number, width: number): CalculationResult => {
   const area = length * width;
   const perimeter = 2 * (length + width);
@@ -67,7 +89,12 @@ export const calculateRectangle = (length: number, width: number): CalculationRe
   };
 };
 
-// Círculo
+/**
+ * Calcula el área y perímetro (circunferencia) de un círculo
+ * @param radius - Radio del círculo
+ * @returns Resultado con área, perímetro, fórmulas y pasos
+ * @throws Error si el radio no es positivo
+ */
 export const calculateCircle = (radius: number): CalculationResult => {
   const area = Math.PI * radius * radius;
   const perimeter = 2 * Math.PI * radius;
