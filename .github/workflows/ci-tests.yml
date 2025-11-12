@@ -1,0 +1,62 @@
+name: CI - Pruebas Unitarias
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  pruebas-unitarias:
+    name: Ejecutar pruebas unitarias con Jest
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar linter
+        run: npm run lint
+
+      - name: Ejecutar verificación de tipos TypeScript
+        run: npm run type-check
+
+      - name: Ejecutar pruebas unitarias
+        run: npm test -- --coverage --passWithNoTests
+
+      - name: Generar reporte de cobertura
+        if: matrix.node-version == '20.x'
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Subir artefactos de cobertura
+        if: matrix.node-version == '20.x'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+
+      - name: Comentar resultados de cobertura
+        if: matrix.node-version == '20.x' && github.event_name == 'pull_request'
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          lcov-file: ./coverage/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
