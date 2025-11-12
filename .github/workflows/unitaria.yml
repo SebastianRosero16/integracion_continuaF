@@ -47,10 +47,12 @@ jobs:
         run: npm run lint
 
       - name: 🧪 Run tests (Jest)
-        run: npm test -- --ci
+        run: npm test -- --ci --passWithNoTests
 
       - name: 🏗️ Build (Vite)
         run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: 📤 Upload production build (artifact)
         if: success()

@@ -35,7 +35,7 @@ jobs:
         run: npm run type-check
 
       - name: Ejecutar pruebas unitarias
-        run: npm test -- --coverage --passWithNoTests
+        run: npm test -- --ci --coverage --passWithNoTests
 
       - name: Generar reporte de cobertura
         if: matrix.node-version == '20.x'
