@@ -9,40 +9,49 @@ interface ColombiaMapProps {
 export function ColombiaMap({ onDepartmentSelect, selectedDepartamento }: ColombiaMapProps) {
   const [hoveredDept, setHoveredDept] = useState<string | null>(null);
 
-  // Paths SVG de las formas reales de los departamentos de Colombia
+  // Paths SVG con formas más grandes y visibles basadas en el mapa real de Colombia
   const departmentPaths: Record<string, string> = {
-    'La Guajira': 'M 650,50 L 760,50 L 760,90 L 750,110 L 730,130 L 700,140 L 670,140 L 655,125 L 650,100 Z',
-    'Magdalena': 'M 540,90 L 650,90 L 650,120 L 640,140 L 620,155 L 590,165 L 560,165 L 545,150 L 540,125 Z',
-    'Atlántico': 'M 460,105 L 540,105 L 540,135 L 525,150 L 505,155 L 485,155 L 470,145 L 460,130 Z',
-    'Cesar': 'M 540,170 L 640,170 L 640,220 L 625,245 L 600,255 L 570,255 L 550,240 L 540,215 Z',
-    'Bolívar': 'M 390,150 L 540,150 L 540,210 L 520,235 L 490,250 L 455,250 L 425,240 L 400,220 L 390,190 Z',
-    'Sucre': 'M 380,195 L 470,195 L 470,240 L 455,255 L 435,260 L 410,260 L 390,250 L 380,230 Z',
-    'Córdoba': 'M 310,180 L 405,180 L 405,230 L 390,250 L 365,260 L 340,260 L 320,245 L 310,220 Z',
-    'Norte de Santander': 'M 590,200 L 685,200 L 685,250 L 670,270 L 645,280 L 620,280 L 600,265 L 590,240 Z',
-    'Santander': 'M 500,220 L 610,220 L 610,285 L 590,310 L 560,320 L 530,320 L 510,300 L 500,270 Z',
-    'Boyacá': 'M 540,285 L 645,285 L 645,350 L 625,375 L 595,380 L 565,380 L 545,360 L 540,330 Z',
-    'Antioquia': 'M 310,240 L 450,240 L 450,340 L 425,365 L 390,370 L 350,370 L 320,355 L 310,310 Z',
-    'Caldas': 'M 310,355 L 380,355 L 380,395 L 365,410 L 345,410 L 330,400 L 315,385 Z',
-    'Risaralda': 'M 270,360 L 335,360 L 335,395 L 320,410 L 300,410 L 285,395 L 270,380 Z',
-    'Quindío': 'M 290,395 L 345,395 L 345,430 L 330,440 L 315,440 L 300,430 L 290,415 Z',
-    'Cundinamarca': 'M 420,340 L 520,340 L 520,410 L 500,430 L 470,435 L 440,435 L 425,420 L 420,390 Z',
-    'Tolima': 'M 340,415 L 440,415 L 440,485 L 420,505 L 390,510 L 360,510 L 345,490 L 340,460 Z',
-    'Huila': 'M 360,495 L 450,495 L 450,560 L 430,575 L 405,580 L 380,580 L 365,565 L 360,535 Z',
-    'Chocó': 'M 180,250 L 290,250 L 290,380 L 270,395 L 240,400 L 210,400 L 190,380 L 180,330 Z',
-    'Valle del Cauca': 'M 230,395 L 320,395 L 320,490 L 300,505 L 270,510 L 245,510 L 230,490 L 230,440 Z',
-    'Cauca': 'M 265,495 L 365,495 L 365,575 L 345,590 L 315,595 L 285,595 L 270,575 L 265,540 Z',
-    'Nariño': 'M 250,580 L 345,580 L 345,660 L 325,680 L 295,685 L 270,685 L 255,665 L 250,625 Z',
-    'Arauca': 'M 645,255 L 760,255 L 760,310 L 745,325 L 720,330 L 690,330 L 665,315 L 645,295 Z',
-    'Casanare': 'M 605,320 L 735,320 L 735,385 L 715,405 L 685,410 L 650,410 L 625,390 L 605,365 Z',
-    'Vichada': 'M 690,380 L 820,380 L 820,460 L 800,480 L 765,490 L 730,490 L 705,470 L 690,440 Z',
-    'Meta': 'M 515,405 L 645,405 L 645,495 L 620,515 L 585,525 L 550,525 L 525,505 L 515,465 Z',
-    'Guainía': 'M 745,475 L 840,475 L 840,545 L 820,560 L 790,565 L 765,565 L 750,545 L 745,515 Z',
-    'Guaviare': 'M 605,505 L 715,505 L 715,570 L 695,585 L 665,590 L 635,590 L 615,570 L 605,540 Z',
-    'Vaupés': 'M 655,580 L 760,580 L 760,650 L 740,670 L 710,675 L 680,675 L 665,655 L 655,625 Z',
-    'Caquetá': 'M 440,565 L 585,565 L 585,645 L 560,665 L 525,670 L 485,670 L 455,650 L 440,615 Z',
-    'Putumayo': 'M 310,640 L 425,640 L 425,705 L 405,720 L 375,720 L 350,710 L 325,695 L 310,675 Z',
-    'Amazonas': 'M 415,660 L 580,660 L 580,775 L 550,795 L 510,800 L 465,800 L 435,780 L 415,745 Z',
-    'San Andrés y Providencia': 'M 50,160 L 105,160 L 105,190 L 95,200 L 75,200 L 60,190 L 50,180 Z',
+    // Región Caribe - Norte
+    'San Andrés y Providencia': 'M 50,180 L 95,180 L 95,210 L 50,210 Z',
+    'La Guajira': 'M 570,100 L 650,95 L 680,120 L 685,160 L 665,185 L 630,190 L 590,175 L 570,145 Z',
+    'Magdalena': 'M 480,135 L 570,130 L 590,150 L 590,180 L 565,195 L 520,195 L 485,175 L 480,155 Z',
+    'Atlántico': 'M 390,150 L 445,150 L 455,165 L 450,185 L 420,190 L 395,180 L 390,165 Z',
+    'Cesar': 'M 510,195 L 585,195 L 595,220 L 590,250 L 560,265 L 525,265 L 510,240 Z',
+    'Bolívar': 'M 330,210 L 460,200 L 485,215 L 495,245 L 480,270 L 440,280 L 380,280 L 345,260 L 330,235 Z',
+    'Sucre': 'M 330,235 L 395,235 L 405,255 L 400,275 L 370,285 L 340,280 L 330,260 Z',
+    'Córdoba': 'M 265,205 L 345,205 L 360,225 L 360,250 L 335,265 L 290,265 L 270,240 L 265,220 Z',
+    
+    // Región Andina - Centro
+    'Norte de Santander': 'M 510,240 L 585,240 L 600,265 L 595,295 L 570,310 L 535,310 L 515,285 L 510,260 Z',
+    'Santander': 'M 420,260 L 515,255 L 535,275 L 540,310 L 515,335 L 470,345 L 430,340 L 420,300 Z',
+    'Boyacá': 'M 455,305 L 550,300 L 570,325 L 570,370 L 545,395 L 495,400 L 460,385 L 455,345 Z',
+    'Arauca': 'M 560,280 L 630,275 L 650,295 L 650,325 L 630,345 L 595,350 L 570,335 L 560,305 Z',
+    'Casanare': 'M 520,345 L 605,340 L 625,360 L 625,400 L 600,425 L 555,430 L 525,410 L 520,375 Z',
+    'Cundinamarca': 'M 370,340 L 460,335 L 485,355 L 490,395 L 465,420 L 415,430 L 380,420 L 370,385 Z',
+    'Antioquia': 'M 265,255 L 390,250 L 420,270 L 430,315 L 425,360 L 395,385 L 340,395 L 290,385 L 265,345 L 260,295 Z',
+    'Chocó': 'M 160,260 L 260,255 L 275,285 L 280,340 L 270,390 L 240,410 L 200,415 L 170,395 L 160,340 Z',
+    'Caldas': 'M 300,360 L 355,355 L 370,370 L 370,395 L 350,410 L 315,410 L 300,390 Z',
+    'Risaralda': 'M 245,360 L 295,360 L 305,375 L 305,400 L 285,415 L 255,415 L 245,390 Z',
+    'Quindío': 'M 275,405 L 320,405 L 330,420 L 330,440 L 310,450 L 285,450 L 275,430 Z',
+    'Tolima': 'M 310,410 L 410,405 L 430,425 L 435,470 L 415,500 L 370,510 L 325,505 L 310,470 Z',
+    'Valle del Cauca': 'M 210,410 L 285,405 L 305,425 L 310,475 L 295,510 L 250,520 L 215,510 L 210,460 Z',
+    
+    // Región Pacífica - Oeste
+    'Cauca': 'M 230,515 L 310,510 L 330,530 L 335,575 L 315,600 L 270,610 L 240,600 L 230,560 Z',
+    'Nariño': 'M 210,600 L 285,595 L 300,615 L 305,660 L 280,685 L 235,690 L 210,670 L 205,630 Z',
+    'Huila': 'M 330,495 L 410,490 L 430,510 L 435,555 L 415,580 L 370,590 L 340,580 L 330,540 Z',
+    
+    // Región Orinoquía - Este
+    'Vichada': 'M 615,385 L 710,380 L 735,405 L 740,460 L 715,490 L 660,500 L 625,485 L 615,440 Z',
+    'Meta': 'M 445,425 L 560,420 L 585,440 L 590,495 L 565,525 L 505,535 L 460,525 L 445,480 Z',
+    
+    // Región Amazonía - Sur
+    'Guainía': 'M 660,465 L 730,460 L 750,485 L 750,530 L 730,555 L 685,560 L 665,540 L 660,500 Z',
+    'Guaviare': 'M 515,510 L 600,505 L 620,525 L 620,570 L 595,595 L 545,600 L 520,580 L 515,545 Z',
+    'Vaupés': 'M 585,575 L 670,570 L 690,590 L 690,635 L 670,660 L 620,665 L 595,645 L 585,610 Z',
+    'Caquetá': 'M 390,565 L 520,560 L 545,580 L 550,630 L 525,660 L 465,670 L 410,665 L 390,635 L 385,595 Z',
+    'Putumayo': 'M 285,655 L 385,650 L 405,670 L 410,710 L 385,730 L 330,735 L 295,720 L 285,685 Z',
+    'Amazonas': 'M 380,680 L 530,675 L 555,700 L 560,760 L 535,795 L 465,805 L 405,800 L 380,770 L 375,720 Z',
   };
 
   const getRegionColor = (region: string): string => {
@@ -58,6 +67,42 @@ export function ColombiaMap({ onDepartmentSelect, selectedDepartamento }: Colomb
 
   const getDepartamento = (deptName: string): Departamento | undefined => {
     return departamentos.find((d) => d.depto === deptName);
+  };
+
+  // Posiciones para los nombres de los departamentos (centros aproximados)
+  const departmentLabelPositions: Record<string, { x: number; y: number }> = {
+    'San Andrés y Providencia': { x: 72, y: 195 },
+    'La Guajira': { x: 625, y: 145 },
+    'Magdalena': { x: 530, y: 165 },
+    'Atlántico': { x: 420, y: 168 },
+    'Cesar': { x: 545, y: 230 },
+    'Bolívar': { x: 395, y: 245 },
+    'Sucre': { x: 365, y: 260 },
+    'Córdoba': { x: 305, y: 235 },
+    'Norte de Santander': { x: 550, y: 273 },
+    'Santander': { x: 470, y: 300 },
+    'Boyacá': { x: 505, y: 350 },
+    'Arauca': { x: 600, y: 310 },
+    'Casanare': { x: 565, y: 385 },
+    'Cundinamarca': { x: 425, y: 385 },
+    'Antioquia': { x: 335, y: 315 },
+    'Chocó': { x: 210, y: 330 },
+    'Caldas': { x: 330, y: 383 },
+    'Risaralda': { x: 270, y: 388 },
+    'Quindío': { x: 300, y: 428 },
+    'Tolima': { x: 365, y: 458 },
+    'Valle del Cauca': { x: 250, y: 463 },
+    'Cauca': { x: 270, y: 560 },
+    'Nariño': { x: 250, y: 645 },
+    'Huila': { x: 375, y: 540 },
+    'Vichada': { x: 670, y: 440 },
+    'Meta': { x: 500, y: 478 },
+    'Guainía': { x: 695, y: 510 },
+    'Guaviare': { x: 560, y: 553 },
+    'Vaupés': { x: 630, y: 618 },
+    'Caquetá': { x: 460, y: 615 },
+    'Putumayo': { x: 340, y: 693 },
+    'Amazonas': { x: 460, y: 740 },
   };
 
   const handleDepartmentClick = (deptName: string) => {
@@ -115,6 +160,22 @@ export function ColombiaMap({ onDepartmentSelect, selectedDepartamento }: Colomb
                   }
                 }}
               />
+              {/* Nombre del departamento */}
+              {departmentLabelPositions[deptName] && (
+                <text
+                  x={departmentLabelPositions[deptName].x}
+                  y={departmentLabelPositions[deptName].y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="#1f2937"
+                  fontSize={deptName.length > 15 ? '10' : '12'}
+                  fontWeight="600"
+                  className="pointer-events-none select-none"
+                  style={{ textShadow: '1px 1px 2px rgba(255,255,255,0.9)' }}
+                >
+                  {deptName}
+                </text>
+              )}
             </g>
           );
         })}
