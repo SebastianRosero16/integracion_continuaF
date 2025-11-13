@@ -18,7 +18,7 @@ describe('ColombiaMap', () => {
   it('debe mostrar instrucciones de uso', () => {
     render(<ColombiaMap onDepartmentSelect={mockOnDepartmentSelect} />);
     
-    expect(screen.getByText(/Pasa el cursor sobre un departamento/i)).toBeInTheDocument();
+    expect(screen.getByText(/información completa/i)).toBeInTheDocument();
   });
 
   it('debe renderizar todos los departamentos como elementos interactivos', () => {
