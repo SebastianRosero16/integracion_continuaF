@@ -468,21 +468,6 @@ export function SocialModule() {
             )}
           </div>
         </div>
-
-        {moduleProgress > 0 && (
-          <Card variant="outlined" className="mt-8 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg">Progreso del Módulo</h3>
-                <p className="text-gray-600 text-sm">¡Completa el quiz con al menos 70% para llegar al 100%!</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="text-3xl font-bold text-green-600">{moduleProgress}%</div>
-                {moduleProgress === 100 && <FaTrophy className="text-yellow-500 text-3xl" />}
-              </div>
-            </div>
-          </Card>
-        )}
       </div>
     </div>
   );
