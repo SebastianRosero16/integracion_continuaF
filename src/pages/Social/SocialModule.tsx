@@ -357,9 +357,10 @@ export function SocialModule() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Imagen del mapa - Siempre visible a la izquierda */}
-          <div className="lg:col-span-1">
-            <Card variant="outlined" className="sticky top-4 p-4">
+          {/* Columna izquierda: Mapa e información del departamento */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Imagen del mapa */}
+            <Card variant="outlined" className="p-4 sticky top-4">
               <h3 className="text-lg font-bold mb-3 text-center">Mapa de Colombia</h3>
               <div className="relative">
                 <img 
@@ -367,27 +368,59 @@ export function SocialModule() {
                   alt="Mapa de Colombia con departamentos coloreados"
                   className="w-full h-auto rounded-lg shadow-md"
                   onError={(e) => {
-                    // Fallback a una URL alternativa si la imagen local falla
                     const target = e.target as HTMLImageElement;
-                    target.onerror = null; // Prevenir loop infinito
+                    target.onerror = null;
                     console.error('No se pudo cargar la imagen del mapa');
                   }}
                 />
-                {selectedDepartamento && (
-                  <div className="mt-3 p-3 bg-blue-50 rounded-lg border-2 border-blue-300">
-                    <p className="text-sm font-semibold text-blue-800 text-center">
-                      Departamento seleccionado:
-                    </p>
-                    <p className="text-lg font-bold text-blue-900 text-center">
-                      {selectedDepartamento.depto}
-                    </p>
-                  </div>
-                )}
               </div>
             </Card>
+
+            {/* Información del departamento seleccionado */}
+            {selectedDepartamento ? (
+              <Card variant="elevated" className="p-6">
+                <div className="text-center mb-4">
+                  <h2 className="text-2xl font-bold mb-2">{selectedDepartamento.depto}</h2>
+                  <p className="text-lg text-gray-600 mb-2">Capital: {selectedDepartamento.capital}</p>
+                  <Badge className={getRegionColor(selectedDepartamento.region)}>
+                    {selectedDepartamento.region}
+                  </Badge>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Población</div>
+                    <div className="text-lg font-semibold">{selectedDepartamento.population.toLocaleString()} habitantes</div>
+                  </div>
+
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Área</div>
+                    <div className="text-lg font-semibold">{selectedDepartamento.area.toLocaleString()} km²</div>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <div className="text-sm text-gray-600 mb-3 flex items-center gap-2">
+                      📌 Datos Interesantes
+                    </div>
+                    <ul className="space-y-2">
+                      {selectedDepartamento.facts.map((fact, index) => (
+                        <li key={index} className="text-sm bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
+                          {fact}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            ) : (
+              <Card variant="outlined" className="p-8 text-center">
+                <FaMapMarkedAlt className="text-5xl text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500 text-sm">Selecciona un departamento para ver sus detalles</p>
+              </Card>
+            )}
           </div>
 
-          {/* Lista de departamentos */}
+          {/* Columna derecha: Lista de departamentos */}
           <div className="lg:col-span-2">
             <div className="grid md:grid-cols-2 gap-4">
               {filteredDepartamentos.map((dept) => (
@@ -432,48 +465,6 @@ export function SocialModule() {
                 >
                   Limpiar Filtros
                 </Button>
-              </Card>
-            )}
-          </div>
-
-          <div className="lg:col-span-1">
-            {selectedDepartamento ? (
-              <Card variant="elevated" className="p-6 sticky top-4">
-                <div className="text-center mb-6">
-                  <h2 className="text-3xl font-bold mb-2">{selectedDepartamento.depto}</h2>
-                  <p className="text-xl text-gray-600 mb-3">Capital: {selectedDepartamento.capital}</p>
-                  <Badge className={getRegionColor(selectedDepartamento.region)}>
-                    {selectedDepartamento.region}
-                  </Badge>
-                </div>
-
-                <div className="space-y-4 mb-6">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Población</div>
-                    <div className="text-lg font-semibold">{selectedDepartamento.population.toLocaleString()} habitantes</div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Área</div>
-                    <div className="text-lg font-semibold">{selectedDepartamento.area.toLocaleString()} km²</div>
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <div className="text-sm text-gray-600 mb-3">📌 Datos Interesantes</div>
-                    <ul className="space-y-2">
-                      {selectedDepartamento.facts.map((fact, index) => (
-                        <li key={index} className="text-sm bg-blue-50 p-3 rounded">
-                          {fact}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </Card>
-            ) : (
-              <Card variant="outlined" className="p-12 text-center sticky top-4">
-                <FaMapMarkedAlt className="text-6xl text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">Selecciona un departamento para ver sus detalles</p>
               </Card>
             )}
           </div>
