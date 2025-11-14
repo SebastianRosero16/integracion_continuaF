@@ -128,12 +128,11 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto"
       >
         {[
-          { icon: '🎯', title: 'Aprendizaje Interactivo', desc: 'Actividades dinámicas y divertidas' },
-          { icon: '📊', title: 'Seguimiento de Progreso', desc: 'Visualiza tu avance en tiempo real' },
-          { icon: '🏆', title: 'Logros y Recompensas', desc: 'Gana insignias por tus logros' },
+          { icon: '🎯', title: 'Aprendizaje Interactivo', desc: 'Actividades dinámicas y divertidas para aprender jugando' },
+          { icon: '📚', title: 'Enriquecimiento de Conocimientos', desc: 'Contenido educativo de calidad para expandir tu aprendizaje' },
         ].map((feature, idx) => (
           <div
             key={idx}
