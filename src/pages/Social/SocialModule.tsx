@@ -360,7 +360,7 @@ export function SocialModule() {
           {/* Columna izquierda: Mapa e información del departamento */}
           <div className="lg:col-span-1 space-y-6">
             {/* Imagen del mapa */}
-            <Card variant="outlined" className="p-4 sticky top-4">
+            <Card variant="outlined" className="p-4">
               <h3 className="text-lg font-bold mb-3 text-center">Mapa de Colombia</h3>
               <div className="relative">
                 <img 
