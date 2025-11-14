@@ -318,15 +318,17 @@ export function SocialModule() {
             </h1>
             <p className="text-gray-600">Explora los 32 departamentos de Colombia y sus características</p>
           </div>
-          <Button 
-            onClick={startQuiz} 
-            variant="success" 
-            size="lg"
-            aria-label="Iniciar quiz de 10 preguntas sobre geografía de Colombia"
-          >
-            <FaTrophy className="inline mr-2" aria-hidden="true" />
-            Quiz de 10 Preguntas
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              onClick={startQuiz} 
+              variant="success" 
+              size="lg"
+              aria-label="Iniciar quiz de 10 preguntas sobre geografía de Colombia"
+            >
+              <FaTrophy className="inline mr-2" aria-hidden="true" />
+              Quiz de 10 Preguntas
+            </Button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
@@ -354,23 +356,33 @@ export function SocialModule() {
           </select>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-6">
-          {/* Imagen del mapa a la izquierda */}
-          <div className="lg:col-span-4">
-            <Card variant="outlined" className="p-4 sticky top-4">
-              <img 
-                src="/mapa-colombia.png" 
-                alt="Mapa de Colombia con sus departamentos" 
-                className="w-full h-auto rounded-lg shadow-md"
-              />
-              <p className="text-center text-sm text-gray-500 mt-3">
-                Mapa político de Colombia
-              </p>
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Imagen del mapa - Siempre visible a la izquierda */}
+          <div className="lg:col-span-1">
+            <Card variant="outlined" className="sticky top-4 p-4">
+              <h3 className="text-lg font-bold mb-3 text-center">Mapa de Colombia</h3>
+              <div className="relative">
+                <img 
+                  src="https://i.imgur.com/9X8qYZj.png"
+                  alt="Mapa de Colombia con departamentos coloreados"
+                  className="w-full h-auto rounded-lg shadow-md"
+                />
+                {selectedDepartamento && (
+                  <div className="mt-3 p-3 bg-blue-50 rounded-lg border-2 border-blue-300">
+                    <p className="text-sm font-semibold text-blue-800 text-center">
+                      Departamento seleccionado:
+                    </p>
+                    <p className="text-lg font-bold text-blue-900 text-center">
+                      {selectedDepartamento.depto}
+                    </p>
+                  </div>
+                )}
+              </div>
             </Card>
           </div>
 
-          {/* Listado de departamentos */}
-          <div className="lg:col-span-8">
+          {/* Lista de departamentos */}
+          <div className="lg:col-span-2">
             <div className="grid md:grid-cols-2 gap-4">
               {filteredDepartamentos.map((dept) => (
                 <Card
@@ -418,8 +430,7 @@ export function SocialModule() {
             )}
           </div>
 
-          {/* Panel de detalles del departamento seleccionado */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-1">
             {selectedDepartamento ? (
               <Card variant="elevated" className="p-6 sticky top-4">
                 <div className="text-center mb-6">
