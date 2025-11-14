@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { FaMapMarkedAlt, FaTrophy, FaCheckCircle, FaTimesCircle, FaMap } from 'react-icons/fa';
+import { FaMapMarkedAlt, FaTrophy, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
-import { ColombiaMap } from '../../components/ColombiaMap';
 import {
   departamentos,
   getRegions,
@@ -29,7 +28,6 @@ export function SocialModule() {
   const [moduleProgress, setModuleProgress] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [regionFilter, setRegionFilter] = useState('all');
-  const [showMap, setShowMap] = useState(false);
 
   // Quiz state
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -320,37 +318,16 @@ export function SocialModule() {
             </h1>
             <p className="text-gray-600">Explora los 32 departamentos de Colombia y sus características</p>
           </div>
-          <div className="flex gap-3">
-            <Button 
-              onClick={() => setShowMap(!showMap)} 
-              variant={showMap ? "primary" : "secondary"}
-              size="lg"
-              aria-label="Mostrar/ocultar mapa interactivo de Colombia"
-            >
-              <FaMap className="inline mr-2" aria-hidden="true" />
-              {showMap ? 'Ocultar Mapa' : 'Ver Mapa'}
-            </Button>
-            <Button 
-              onClick={startQuiz} 
-              variant="success" 
-              size="lg"
-              aria-label="Iniciar quiz de 10 preguntas sobre geografía de Colombia"
-            >
-              <FaTrophy className="inline mr-2" aria-hidden="true" />
-              Quiz de 10 Preguntas
-            </Button>
-          </div>
+          <Button 
+            onClick={startQuiz} 
+            variant="success" 
+            size="lg"
+            aria-label="Iniciar quiz de 10 preguntas sobre geografía de Colombia"
+          >
+            <FaTrophy className="inline mr-2" aria-hidden="true" />
+            Quiz de 10 Preguntas
+          </Button>
         </div>
-
-        {/* Mapa Interactivo de Colombia */}
-        {showMap && (
-          <div className="mb-8">
-            <ColombiaMap 
-              onDepartmentSelect={setSelectedDepartamento} 
-              selectedDepartamento={selectedDepartamento}
-            />
-          </div>
-        )}
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <input
@@ -377,8 +354,23 @@ export function SocialModule() {
           </select>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+        <div className="grid lg:grid-cols-12 gap-6">
+          {/* Imagen del mapa a la izquierda */}
+          <div className="lg:col-span-4">
+            <Card variant="outlined" className="p-4 sticky top-4">
+              <img 
+                src="/mapa-colombia.png" 
+                alt="Mapa de Colombia con sus departamentos" 
+                className="w-full h-auto rounded-lg shadow-md"
+              />
+              <p className="text-center text-sm text-gray-500 mt-3">
+                Mapa político de Colombia
+              </p>
+            </Card>
+          </div>
+
+          {/* Listado de departamentos */}
+          <div className="lg:col-span-8">
             <div className="grid md:grid-cols-2 gap-4">
               {filteredDepartamentos.map((dept) => (
                 <Card
@@ -426,7 +418,8 @@ export function SocialModule() {
             )}
           </div>
 
-          <div className="lg:col-span-1">
+          {/* Panel de detalles del departamento seleccionado */}
+          <div className="lg:col-span-4">
             {selectedDepartamento ? (
               <Card variant="elevated" className="p-6 sticky top-4">
                 <div className="text-center mb-6">
