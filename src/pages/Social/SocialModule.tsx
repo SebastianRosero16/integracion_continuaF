@@ -363,13 +363,14 @@ export function SocialModule() {
               <h3 className="text-lg font-bold mb-3 text-center">Mapa de Colombia</h3>
               <div className="relative">
                 <img 
-                  src="/mapa-colombia.png"
+                  src="/mapa-colombia.jpg"
                   alt="Mapa de Colombia con departamentos coloreados"
                   className="w-full h-auto rounded-lg shadow-md"
                   onError={(e) => {
                     // Fallback a una URL alternativa si la imagen local falla
                     const target = e.target as HTMLImageElement;
-                    target.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Colombia_-_Cundinamarca_-_Bogot%C3%A1.svg/800px-Colombia_-_Cundinamarca_-_Bogot%C3%A1.svg.png';
+                    target.onerror = null; // Prevenir loop infinito
+                    console.error('No se pudo cargar la imagen del mapa');
                   }}
                 />
                 {selectedDepartamento && (
